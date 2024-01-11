@@ -18,11 +18,11 @@ Installation des CUDA Toolkits abbrechen, VSCode installieren und danach CUDA In
 [Download v11.8](https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_network)
 
 ## cuDNN SDK
-[Download v8.6.0 für CUDA 11.x](https://developer.nvidia.com/rdp/cudnn-archive)
+[Download v8.6.0 für CUDA 11.x](https://developer.nvidia.com/rdp/cudnn-archive)  
 [Schritte 1-4 ausführen](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installwindows)
 
 ## WSL
-[Step 2.2](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)
+[Step 2.2](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)  
 [Erste Schritte bis einschließlich Update- und Upgradepakete ausführen](https://learn.microsoft.com/de-de/windows/wsl/setup/environment#get-started)
 
 - In dem Ordner des Projekts eine CMD öffnen.  
