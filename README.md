@@ -47,7 +47,7 @@ Die Liste kann per `pip list` ausgegeben werden.
 
 <details>
     <summary>Package List</summary>
-    ```
+
     absl-py                      2.0.0  
     astunparse                   1.6.3  
     attrs                        23.2.0  
@@ -141,8 +141,7 @@ Die Liste kann per `pip list` ausgegeben werden.
     Werkzeug                     3.0.1  
     wheel                        0.37.1  
     wrapt                        1.14.1  
-    zipp                         1.0.0  
-    ```
+    zipp                         1.0.0
 </details>
 
 ## Ausführen der Skripts
