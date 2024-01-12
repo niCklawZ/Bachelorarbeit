@@ -1,8 +1,19 @@
+import glob
+import os.path
 import matplotlib.pyplot as plt
 import json
 
+# Get most recent file in results directory to create
+list_of_files = glob.glob('../results/*.json')
+latest_file = max(list_of_files, key=os.path.getctime)
+
+# Uncomment next line if you want to specify another .json file that is not the most recent one
+# latest_file = '../results\\results-2024-01-12-15-00-03.json'
+
+file_name = latest_file.split('\\')[1].split('.')[0]
+
 # Get result data from json file
-with open("../results/results.json", "r") as openfile:
+with open(latest_file, "r") as openfile:
     json_object = json.load(openfile)
 
 # Get epoch count
@@ -23,7 +34,7 @@ plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 
 # Save plot to file
-plt.savefig("../results/results.png", dpi=400)
+plt.savefig("../results/" + file_name + ".png", dpi=400)
 
 # Show plots
 plt.show()

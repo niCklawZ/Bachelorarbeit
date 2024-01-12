@@ -1,5 +1,7 @@
 import tensorflow as tf
 import json
+import time
+from datetime import datetime
 
 # Test tensorflow GPU availability
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -133,12 +135,15 @@ history = model.fit(
 reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(factor=0.75, patience=6)
 early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=30)
 
+start_time = time.time()
 history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=epochs,
     callbacks=[reduce_lr, early_stop]
 )
+end_time = time.time()
+duration = end_time - start_time
 
 # Evaluate model with independent dataset
 results = model.evaluate(eval_ds, batch_size=batch_size)
@@ -157,11 +162,9 @@ json_data = {
     'val_loss': val_loss
 }
 json_object = json.dumps(json_data, indent=4)
-# TODO add time stamp to file name so results can be compared and aren't overwritten
-with open("../results/results.json", "w") as outfile:
+current_time = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+with open("../results/results-" + current_time + ".json", "w") as outfile:
     outfile.write(json_object)
 
-# Save model to .keras file TODO with information about datetime, evaluation results and time to train
-# current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-# "models/" + current_time + " | training acc: " + round(acc), 3) + " | training loss: " + round(loss, 3) + " | validation acc: " + round(val_acc, 3) + " | validation loss: " + round(val_loss, 3)
-model.save('../models/trainedCNN.keras')
+# Save model to .keras file with information about date, evaluation results and training time for faster comparison between models
+model.save('../models/trainedModel-' + current_time + '-eval_loss ' + str(round(results[0], 3)) + '-eval_acc ' + str(round(results[1], 3)) + '-train_time ' + str(round(duration, 3)) + '.keras')

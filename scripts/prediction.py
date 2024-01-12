@@ -9,8 +9,11 @@ import queue
 import threading
 from cvzoneHandTrackingModified import HandDetector
 
+# Set URL of camera video stream to predict. Use the App 'IP Webcam' on Android
+video_url = 'http://nick:1234@192.168.178.61:8080/video'
+
 # Import trained model
-model = tf.keras.models.load_model('../models/trainedCNN.keras')
+model = tf.keras.models.load_model('../models/trainedModel-2024-01-12-15-00-03-eval_loss 0.019-eval_acc 0.992-train_time 66.104.keras')
 model.summary()
 
 # Define classes to classify
@@ -28,7 +31,7 @@ detector = HandDetector(detectionCon=0.8, maxHands=1)
 class VideoCapture:
 
     def __init__(self):
-        self.cap = cv2.VideoCapture('http://nick:1234@192.168.178.61:8080/video')
+        self.cap = cv2.VideoCapture(video_url)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
         self.q = queue.Queue()
