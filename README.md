@@ -41,6 +41,7 @@ Ich weiß nicht mehr alle, die benötigt wurden, aber hier ein paar:
 - mediapipe (Hatte version 0.10.9)
 - opencv `sudo apt-get update && sudo apt-get install -y python3-opencv` und `pip install opencv-python` 
 (Aufjedenfall nicht opencv-python-headless installieren, damit gab es Probleme)
+- Bei Problemen bezüglich `Qt platform plugin`: `sudo apt-get install python3-pyqt5` und `sudo apt-get install libxcb-xinerama0` [Quelle](https://github.com/labelmeai/labelme/issues/842)
 
 Hier ist eine Liste der installierten Packages, bei einem Stand wo alles wie gewollt funktioniert.
 Die Liste kann per `pip list` ausgegeben werden.
