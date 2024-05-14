@@ -1,5 +1,5 @@
 # Bachelorarbeit
-Dieses Projekt enthält den Entwicklungsprozess und die finale Version der Software, die im Rahmen der Bachelorarbeit von Nick Kottek erstellt wurde.
+Dieses Projekt enthält den Entwicklungsprozess und die finale Version der Software, die im Rahmen der Bachelorarbeit von Nick Kottek erstellt wurde. Es wurde eine Software erstellt, welche die Gesten des deutschen Fingeralphabets mithilfe eines Convolutional Neural Network klassifizieren kann.
 
 # Installationsanweisungen
 [Wichtiger Guide von Tensorflow](https://www.tensorflow.org/install/pip#windows-wsl2)
@@ -41,19 +41,20 @@ Ich weiß nicht mehr alle, die benötigt wurden, aber hier ein paar:
 - mediapipe (Hatte version 0.10.9)
 - opencv `sudo apt-get update && sudo apt-get install -y python3-opencv` und `pip install opencv-python` 
 (Aufjedenfall nicht opencv-python-headless installieren, damit gab es Probleme)
+- Bei Problemen bezüglich `Qt platform plugin`: `sudo apt-get install python3-pyqt5` und `sudo apt-get install libxcb-xinerama0` [Quelle](https://github.com/labelmeai/labelme/issues/842)
 
-Hier ist eine Liste der installierten Packages, bei einem Stand wo alles wie gewollt funktioniert.
+Hier ist eine Liste der installierten Packages, bei einem Stand, wo alles wie gewollt funktioniert.
 Die Liste kann per `pip list` ausgegeben werden.
 
 <details>
     <summary>Package List</summary>
 
-    absl-py                      2.0.0  
+    absl-py                      2.1.0  
     astunparse                   1.6.3  
     attrs                        23.2.0  
     blinker                      1.4  
-    cachetools                   5.3.2  
-    certifi                      2023.11.17  
+    cachetools                   5.3.3  
+    certifi                      2024.2.2  
     cffi                         1.16.0  
     charset-normalizer           3.3.2  
     command-not-found            0.3  
@@ -64,12 +65,12 @@ Die Liste kann per `pip list` ausgegeben werden.
     distro                       1.7.0  
     distro-info                  1.1+ubuntu0.2  
     flatbuffers                  23.5.26  
-    fonttools                    4.47.2  
+    fonttools                    4.49.0  
     gast                         0.5.4  
-    google-auth                  2.26.1  
+    google-auth                  2.28.1  
     google-auth-oauthlib         1.2.0  
     google-pasta                 0.2.0  
-    grpcio                       1.60.0  
+    grpcio                       1.62.0  
     h5py                         3.10.0  
     httplib2                     0.20.2  
     idna                         3.6  
@@ -83,13 +84,13 @@ Die Liste kann per `pip list` ausgegeben werden.
     lazr.uri                     1.0.6  
     libclang                     16.0.6  
     Markdown                     3.5.2  
-    MarkupSafe                   2.1.3  
-    matplotlib                   3.8.2  
+    MarkupSafe                   2.1.5  
+    matplotlib                   3.8.3  
     mediapipe                    0.10.9  
     ml-dtypes                    0.2.0  
     more-itertools               8.10.0  
     netifaces                    0.11.0  
-    numpy                        1.26.3  
+    numpy                        1.26.4  
     nvidia-cublas-cu12           12.2.5.6  
     nvidia-cuda-cupti-cu12       12.2.142  
     nvidia-cuda-nvcc-cu12        12.2.140  
@@ -104,6 +105,7 @@ Die Liste kann per `pip list` ausgegeben werden.
     nvidia-nvjitlink-cu12        12.2.140  
     oauthlib                     3.2.0  
     opencv-contrib-python        4.9.0.80  
+    opencv-pyton                 4.9.0.80
     opt-einsum                   3.3.0  
     packaging                    23.2  
     pillow                       10.2.0  
@@ -115,7 +117,9 @@ Die Liste kann per `pip list` ausgegeben werden.
     PyGObject                    3.42.1  
     PyJWT                        2.3.0  
     pyparsing                    2.4.7  
-    python-apt                   2.4.0+ubuntu2  
+    PyQt5                        5.15.6
+    PyQt5-sip                    12.9.1
+    python-apt                   2.4.0+ubuntu3  
     python-dateutil              2.8.2  
     PyYAML                       5.4.1  
     requests                     2.31.0  
@@ -130,13 +134,13 @@ Die Liste kann per `pip list` ausgegeben werden.
     tensorboard-data-server      0.7.2  
     tensorflow                   2.15.0.post1  
     tensorflow-estimator         2.15.0  
-    tensorflow-io-gcs-filesystem 0.35.0  
+    tensorflow-io-gcs-filesystem 0.36.0  
     termcolor                    2.4.0  
-    typing_extensions            4.9.0  
+    typing_extensions            4.10.0  
     ubuntu-advantage-tools       8001  
     ufw                          0.36.1  
     unattended-upgrades          0.1  
-    urllib3                      2.1.0  
+    urllib3                      2.2.1  
     wadllib                      1.3.6  
     Werkzeug                     3.0.1  
     wheel                        0.37.1  

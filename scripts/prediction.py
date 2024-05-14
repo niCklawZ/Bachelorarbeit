@@ -1,20 +1,24 @@
 """
 Author: Nick Kottek
+Date: 14.05.2024
 """
 
+import json
+import time
 import cv2
 import numpy as np
 import tensorflow as tf
 import queue
 import threading
 from cvzoneHandTrackingModified import HandDetector
+import math
 
 # Set URL of camera video stream to predict. Use the App 'IP Webcam' on Android
 video_url = 'http://nick:1234@192.168.178.61:8080/video'
 
 # Import trained model
-model = tf.keras.models.load_model('../models/trainedModel-2024-01-12-15-00-03-eval_loss 0.019-eval_acc 0.992-train_time 66.104.keras')
-model.summary()
+model = tf.keras.models.load_model(
+    '../models/trainedModel-2024-05-01-19-50-35-eval_loss 0.01-eval_acc 0.996-train_time 41.614.keras')
 
 # Define classes to classify
 class_names = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'sch', 't',
@@ -112,7 +116,7 @@ def get_prediction_data(img):
         prediction_image = prediction_image.astype(np.float32)
         prediction_image_array = tf.expand_dims(prediction_image, 0)
 
-        return prediction_image_array, frame, img_hand_big
+        return prediction_image_array, frame, img_hand_small
     else:
         return None, frame, None
 
@@ -124,6 +128,9 @@ cv2.namedWindow("Filtered Image")
 # Start videocapture
 cap = VideoCapture()
 
+# Initialize duration statistic storage
+duration_statistics = {}
+
 # Start live prediction
 while True:
     # Get prediction and visualisation data from most recent frame
@@ -131,20 +138,30 @@ while True:
 
     # Predict data if there is any
     if pred_array is not None:
+        start_time = time.time()
         predictions = model.predict(pred_array)
-        scores = tf.nn.softmax(predictions[0])
+        scores = predictions[0]
+        end_time = time.time()
+        duration = (end_time - start_time) * 1000
         print(
-            "This image most likely belongs to {} with a {:.2f} percent confidence."
-            .format(class_names[np.argmax(scores)], 100 * np.max(scores))
+            "This image most likely belongs to {} with a {:.2f} percent confidence. - Time to predict: {} ms"
+            .format(class_names[np.argmax(scores)], 100 * np.max(scores), duration)
         )
 
+        # Add current duration to duration statistic
+        duration_trunc = math.trunc(duration)
+        if duration_trunc in duration_statistics:
+            duration_statistics[duration_trunc] += 1
+        else:
+            duration_statistics[duration_trunc] = 1
+
         # Print results on screen as visualisation
-        font = cv2.FONT_HERSHEY_COMPLEX
-        topLeftCornerOfText = (10, 40)
-        fontScale = 1.5
-        fontColor = (0, 0, 255)
+        font = cv2.FONT_HERSHEY_DUPLEX
+        topLeftCornerOfText = (20, 80)
+        fontScale = 2.5
+        fontColor = (255, 255, 255)
         thickness = 3
-        lineType = 2
+        lineType = cv2.LINE_AA
         cv2.putText(cam_frame, 'Predicted Letter: {} - {:.2f}% confidence'.format(class_names[np.argmax(scores)],
                                                                                   100 * np.max(scores)),
                     topLeftCornerOfText,
@@ -165,6 +182,20 @@ while True:
     # ESC to close window and stop prediction
     key = cv2.waitKey(1) & 0xFF
     if key == 27:
+        for duration, amount in sorted(duration_statistics.items()):
+            print(f"{duration} ms: {amount} times")
+
+        # Remove outliers from duration statistic
+        max_duration = 90
+        adjusted_duration_statistics = {duration: amount for duration, amount in duration_statistics.items() if
+                                        duration <= max_duration}
+
+        classification_statistics_JSON = json.dumps(dict(sorted(adjusted_duration_statistics.items())), indent=4)
+
+        # Export duration statistic to generate a graph from it
+        with open("../results/classificationStatistics.json", "w") as outfile:
+            outfile.write(classification_statistics_JSON)
+
         break
 
 cv2.destroyAllWindows()

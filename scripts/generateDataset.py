@@ -1,5 +1,6 @@
 """
 Author: Nick Kottek
+Date: 14.05.2024
 """
 
 import cv2
@@ -9,6 +10,7 @@ from cvzoneHandTrackingModified import HandDetector
 # For which letter should the images be collected?
 letter = "ß"
 
+# Set output directory
 dataset_directory = os.getcwd() + "\..\dataset\\" + letter
 
 dirExists = os.path.exists(dataset_directory)

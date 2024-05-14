@@ -4,6 +4,7 @@ By: Computer Vision Zone
 Website: https://www.computervision.zone/
 Source: https://github.com/cvzone/cvzone/blob/master/cvzone/HandTrackingModule.py
 Modified By: Nick Kottek
+Date: 14.05.2024
 """
 
 import cv2
@@ -87,12 +88,12 @@ class HandDetector:
 
                 # draw
                 if draw:
-                   self.mpDraw.draw_landmarks(img, handLms,
-                                         self.mpHands.HAND_CONNECTIONS)
-                   cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20),
-                            (bbox[0] + bbox[2] + 20, bbox[1] + bbox[3] + 20),
-                            (255, 0, 255), 2)
-                   cv2.putText(img,myHand["type"],(bbox[0] - 30, bbox[1] - 30),cv2.FONT_HERSHEY_PLAIN,
-                          2,(255, 0, 255),2)
+                    self.mpDraw.draw_landmarks(img, handLms,
+                                               self.mpHands.HAND_CONNECTIONS)
+                    cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20),
+                                  (bbox[0] + bbox[2] + 20, bbox[1] + bbox[3] + 20),
+                                  (255, 0, 255), 2)
+                    cv2.putText(img, myHand["type"], (bbox[0] - 30, bbox[1] - 30), cv2.FONT_HERSHEY_PLAIN,
+                                2, (255, 0, 255), 2)
 
         return allHands, img, bbox

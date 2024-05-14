@@ -1,5 +1,6 @@
 """
 Author: Nick Kottek
+Date: 14.05.2024
 """
 
 import cv2
@@ -47,34 +48,33 @@ while True:
 
             '''
             # Sobel-Filter
-            #img_hand = cv2.blur(img_hand, ksize=(5, 5))
-            #frame1 = cv2.Sobel(img_hand, cv2.CV_32F, dx=1, dy=0)
-            #frame2 = cv2.Sobel(img_hand, cv2.CV_32F, dx=0, dy=1)
-            #img_hand = cv2.convertScaleAbs(frame1 + frame2)
+            img_hand = cv2.blur(img_hand, ksize=(5, 5))
+            frame1 = cv2.Sobel(img_hand, cv2.CV_32F, dx=1, dy=0)
+            frame2 = cv2.Sobel(img_hand, cv2.CV_32F, dx=0, dy=1)
+            img_hand = cv2.convertScaleAbs(frame1 + frame2)
 
             # CLAHE-Filter
-            #clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-            #img_hand = clahe.apply(img_hand)
+            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+            img_hand = clahe.apply(img_hand)
 
             # Rauschen entfernen
-            #_, img_hand = cv2.threshold(img_hand, 30, 0, cv2.THRESH_TOZERO)
-            # Skalierung
+            _, img_hand = cv2.threshold(img_hand, 30, 0, cv2.THRESH_TOZERO)
             '''
 
-            # Source: https://stackoverflow.com/a/14756351
             '''
+            # Source: https://stackoverflow.com/a/14756351
             im_ycrcb = cv2.cvtColor(img_hand, cv2.COLOR_BGR2YCR_CB)
-    
-            skin_ycrcb_mint = numpy.array((0,133,77))
-            skin_ycrcb_maxt = numpy.array((255,173,127))
+
+            skin_ycrcb_mint = numpy.array((0, 133, 77))
+            skin_ycrcb_maxt = numpy.array((255, 173, 127))
             skin_ycrcb = cv2.inRange(im_ycrcb, skin_ycrcb_mint, skin_ycrcb_maxt)
-    
+
             contours, _ = cv2.findContours(skin_ycrcb, cv2.RETR_EXTERNAL,
-                                         cv2.CHAIN_APPROX_SIMPLE)
-            for i, c in enumerate(contours):
-            area = cv2.contourArea(c)
-            if area > 1000:
-                cv2.drawContours(img_hand, contours, i, (255, 0, 0), 3)
+                                           cv2.CHAIN_APPROX_SIMPLE)
+
+            img_hand = cv2.bitwise_and(img_hand, img_hand, mask=skin_ycrcb)
+
+            img_hand = cv2.cvtColor(img_hand, cv2.COLOR_RGB2GRAY)
             '''
 
             # Source: https://stackoverflow.com/a/60761202

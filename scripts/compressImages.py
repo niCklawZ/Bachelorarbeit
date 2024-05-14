@@ -1,9 +1,14 @@
+"""
+Author: Nick Kottek
+Date: 14.05.2024
+"""
+
 import os
 from PIL import Image
 
 # Define directory paths
-input_directory = "dataset"
-output_directory = "dataset_compressed"
+input_directory = "../dataset"
+output_directory = "../dataset_compressed"
 
 # Create output directory if it doesn't exist
 if not os.path.exists(output_directory):
